@@ -5,13 +5,13 @@ import matplotlib.pyplot as mpl
 ### Paramètres du tuyau ###
 L = 0.5
 N = 10
-umax = 20
-du = 0.01
+umax = 15
+du = 0.1
 
 
 ### Paramtètres adimensionnés ###
-gamma = 10
-beta = 0.65
+gamma = 0
+beta = 0.2
 
 ### Fonction donnant les valeurs propres de poutre ###
 def Eq_Cara(Lambda):
@@ -119,7 +119,7 @@ while u < umax:
         
           
     
-    while min(np.max(diff,1)) < 0.99999 and du_tempo > 10**-10:
+    while min(np.max(diff,1)) < 0.99 and du_tempo > 10**-10:
         
         u_tempo = u+du_tempo/2
         du_tempo = du_tempo/2
