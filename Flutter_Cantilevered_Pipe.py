@@ -68,8 +68,7 @@ def dsr(s,r):
     else:
         return (4*(LAMBDA[r]*sigma(r)-LAMBDA[s]*sigma(s)+2)*(-1)**(r+s))/(1-(LAMBDA[s]/LAMBDA[r])**4)-((3+(LAMBDA[s]/LAMBDA[r])**4)/(1-((LAMBDA[s]/LAMBDA[r])**4)))*bsr(s,r)                                                                                                                                               
 
-U = np.linspace(0,4,40)
-u_array = (M/(E*I))**0.5*L*U
+
 u_array = np.linspace(0,50,1000)
 
 
@@ -86,13 +85,13 @@ Delta = np.zeros((N,N))
 for i in range(N):
     Delta[i,i] = LAMBDA[i]**4
 
-u_critique = np.zeros((len(array_gamma),len(array_beta)))
+b_critique = np.zeros((len(array_gamma),len(u_array)))
 
 for g in range(len(array_gamma)):
-    for b in range(len(array_beta)):
-        beta = array_beta[b]
+    for i in range(len(u_array)):
+        u = u_array[i]
         gamma = array_gamma[g]
-        u = u_array[0]
+        beta = array_beta[-1]
         MM = np.eye(N)
         C_g = 2*beta**0.5*u*B
         K = Delta + gamma*B + (u**2-gamma)*C + gamma*D
@@ -105,8 +104,8 @@ for g in range(len(array_gamma)):
         #     print("Oui")
         #     u_critique[g,b] = u
         
-        for i in range(1,len(u_array)):
-            u = u_array[i]
+        for b in range(1,len(array_beta)):
+            beta = array_beta[len(array_beta)-b]
             MM = np.eye(N)
             C_g = 2*beta**0.5*u*B
             K = Delta + gamma*B + (u**2-gamma)*C + gamma*D
@@ -117,13 +116,15 @@ for g in range(len(array_gamma)):
             
             Arg = np.argmin((-1j*eigenValues).imag)
                 
-            if (-1j*eigenValues).imag[Arg] < -0.1 and u_critique[g,b] == 0 and (-1j*eigenValues).real[Arg] != 0:
-                u_critique[g,b] = u
+            if (-1j*eigenValues).imag[Arg] < -0.01 and b_critique[g,i] == 0 and (-1j*eigenValues).real[Arg] != 0:
+                b_critique[g,i] = beta
                 
-mpl.plot(array_beta,u_critique[0,:],label='Gamma = -10')
-mpl.plot(array_beta,u_critique[1,:],label='Gamma = 0')
-mpl.plot(array_beta,u_critique[2,:],label='Gamma = 10')
-mpl.plot(array_beta,u_critique[3,:],label='Gamma = 100')
+mpl.xlim((0,1))
+mpl.ylim((0,24))                
+mpl.plot(b_critique[0,:],u_array,label='Gamma = -10')
+mpl.plot(b_critique[1,:],u_array,label='Gamma = 0')
+mpl.plot(b_critique[2,:],u_array,label='Gamma = 10')
+mpl.plot(b_critique[3,:],u_array,label='Gamma = 100')
 mpl.legend()
 mpl.xlabel("Beta")
 mpl.ylabel("U critique")
