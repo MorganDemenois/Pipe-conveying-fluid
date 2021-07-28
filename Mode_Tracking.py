@@ -1,12 +1,13 @@
 import numpy as np
 from scipy import linalg
 import matplotlib.pyplot as mpl
+import matplotlib.ticker as mpt
 
 ### Paramètres du tuyau ###
 L = 0.5
 N = 10
-umax = 15
-du = 0.1
+umax = 20
+du = 0.01
 
 
 ### Paramtètres adimensionnés ###
@@ -143,32 +144,19 @@ mode2 = N+1
 mode3 = N+2
 mode4 = N+3
    
-mpl.plot(RE_Omega[:,mode1],IM_Omega[:,mode1],label="Mode 1")
-mpl.plot(RE_Omega[:,mode2],IM_Omega[:,mode2],label="Mode 2")
-mpl.plot(RE_Omega[:,mode3],IM_Omega[:,mode3],label="Mode 3")
-mpl.plot(RE_Omega[:,mode4],IM_Omega[:,mode4],label="Mode 4")
-mpl.xlabel("Re(Omega)")
-mpl.ylabel("Im(Omega)")
-mpl.title("Evolution de Omega en faisant varier la vitesse u")
-mpl.legend()
-mpl.show()
-
-mpl.plot(u_array,RE_Omega[:,mode1],label="Mode 1")
-mpl.plot(u_array,RE_Omega[:,mode2],label="Mode 2")
-mpl.plot(u_array,RE_Omega[:,mode3],label="Mode 3")
-mpl.plot(u_array,RE_Omega[:,mode4],label="Mode 4")
-mpl.xlabel("u")
-mpl.ylabel("Re(Omega)")
-mpl.title("Evolution de la fréquence en faisant varier la vitesse u")
-mpl.legend()
-mpl.show()
-
-mpl.plot(u_array,IM_Omega[:,mode1],label="Mode 1")
-mpl.plot(u_array,IM_Omega[:,mode2],label="Mode 2")
-mpl.plot(u_array,IM_Omega[:,mode3],label="Mode 3")
-mpl.plot(u_array,IM_Omega[:,mode4],label="Mode 4")
-mpl.xlabel("u")
-mpl.ylabel("IM(Omega)")
-mpl.title("Evolution de l'amortissement en faisant varier la vitesse u")
-mpl.legend()
-mpl.show()
+fig = mpl.figure(figsize=(8, 8))
+ax = fig.add_subplot(1, 1, 1, aspect=1.2)
+ax.plot(RE_Omega[:,mode1],IM_Omega[:,mode1],label="Mode 1")
+ax.plot(RE_Omega[:,mode2],IM_Omega[:,mode2],label="Mode 2")
+ax.plot(RE_Omega[:,mode3],IM_Omega[:,mode3],label="Mode 3")
+ax.plot(RE_Omega[:,mode4],IM_Omega[:,mode4],label="Mode 4")
+ax.set_xlim((0,130))
+ax.set_ylim((-20,30))
+ax.xaxis.set_major_locator(mpt.MultipleLocator(10))
+ax.yaxis.set_major_locator(mpt.MultipleLocator(5))
+ax.set_xlabel("Re(Omega)")
+ax.set_ylabel("Im(Omega)")
+ax.set_title("Evolution de Omega en faisant varier la vitesse u")
+ax.legend()
+ax.grid()
+fig.show()
