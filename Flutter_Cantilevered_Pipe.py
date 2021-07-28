@@ -20,7 +20,7 @@ N = 10
 ### Paramtètres adimensionnés ###
 beta = M/(M+m)
 gamma = (m+M)*L**3*g/(E*I)
-array_beta = np.linspace(0,1,100)
+array_beta = np.linspace(0,1,101)
 array_gamma = np.array([-10,0,10,100])
 
 ### Fonction donnant les valeurs propres de poutre ###
@@ -69,7 +69,7 @@ def dsr(s,r):
         return (4*(LAMBDA[r]*sigma(r)-LAMBDA[s]*sigma(s)+2)*(-1)**(r+s))/(1-(LAMBDA[s]/LAMBDA[r])**4)-((3+(LAMBDA[s]/LAMBDA[r])**4)/(1-((LAMBDA[s]/LAMBDA[r])**4)))*bsr(s,r)                                                                                                                                               
 
 
-u_array = np.linspace(0,50,1000)
+u_array = np.linspace(0,50,501)
 
 
 B = np.zeros((N,N))
